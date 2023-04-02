@@ -9,7 +9,7 @@
 
 ## Collaborators 
 
-Akond Rahman (Lead), Rahul Pandita, and Shazibul Islam Shamim 
+Jared Prather, George Martin, Matthew Jayroe
 
 ### Details 
 
