@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fuzz
-        uses: jprather7966/SoftwareQualityAssumption-SQA2023-AUBURN/fuzz.py@master
+        uses: jprather7966/SoftwareQualityAssumption-SQA2023-AUBURN/fuzz.py@main
         with:
           output: results.sarif
           format: sarif
