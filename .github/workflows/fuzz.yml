@@ -9,4 +9,4 @@ jobs:
     name: Fuzzer
     runs-on: ubuntu-latest
     steps:
-      - uses: fuzz.py
+      - uses: jprather7966/SoftwareQualityAssumption-SQA2023-AUBURN/fuzz.py@master
