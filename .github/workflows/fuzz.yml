@@ -2,14 +2,15 @@ name: Fuzz
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
 
 jobs:
   fuzz:
-    name: Fuzz
     runs-on: ubuntu-latest
     steps:
-      - uses: jprather7966/SoftwareQualityAssumption-SQA2023-AUBURN/fuzz.py@master
+      - name: Fuzz
+        uses: jprather7966/SoftwareQualityAssumption-SQA2023-AUBURN/fuzz.py@master
         with:
           output: results.sarif
           format: sarif
