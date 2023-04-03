@@ -4,7 +4,7 @@ from scanner import getYAMLFiles, isValidUserName, isValidPasswordName, isValidK
 
 def fuzzMethod (method, args: List[Any]):
     for arg in args:
-        print("---------------------------------------------------------------------------")
+        print("--------------------------------------------------------------------------")
         try:
             result = method(*arg)
         except Exception as e:
