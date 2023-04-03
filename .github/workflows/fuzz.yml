@@ -1,0 +1,12 @@
+name: Fuzz Script
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  fuzzer:
+    name: Fuzzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fuzz.py@master
