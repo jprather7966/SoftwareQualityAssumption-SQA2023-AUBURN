@@ -10,7 +10,16 @@ import os
 import pandas as pd 
 import numpy as np 
 
+#importing logging_example tool
+import simpleLogger
+
+#Setting initial logObj
+logObj = simpleLogger.giveMeLoggingObject()
+
+
+
 def getYAMLFiles(path_to_dir):
+    logObj.info('Reading in YAML Files...')
     valid_  = [] 
     for root_, dirs, files_ in os.walk( path_to_dir ):
        for file_ in files_:
@@ -21,6 +30,7 @@ def getYAMLFiles(path_to_dir):
     return valid_ 
 
 def isValidUserName(uName): 
+    logObj.info('Checking for Valid User Name...')
     valid = True
     if (isinstance( uName , str)  ): 
         if( any(z_ in uName for z_ in constants.FORBIDDEN_USER_NAMES )   ): 
@@ -32,6 +42,7 @@ def isValidUserName(uName):
     return valid
 
 def isValidPasswordName(pName): 
+    logObj.info('Validating Password...')
     valid = True
     if (isinstance( pName , str)  ): 
         if( any(z_ in pName for z_ in constants.FORBIDDEN_PASS_NAMES) )  : 
@@ -43,6 +54,7 @@ def isValidPasswordName(pName):
     return valid
 
 def isValidKey(keyName): 
+    logObj.info('Validating Key...')
     valid = False 
     if ( isinstance( keyName, str )  ):
         if( any(z_ in keyName for z_ in constants.LEGIT_KEY_NAMES ) ) : 
@@ -54,6 +66,7 @@ def isValidKey(keyName):
     return valid    
 
 def checkIfValidSecret(single_config_val):
+    logObj.info('Validating Secret...')
     flag2Ret = False 
     # print(type( single_config_val ), single_config_val  )
     if ( isinstance( single_config_val, str ) ):
@@ -69,6 +82,7 @@ def checkIfValidSecret(single_config_val):
     return flag2Ret
 
 def scanUserName(k_ , val_lis ):
+    logObj.info('Scanning User Name...')
     hard_coded_unames = []
     if isinstance(k_, str):
         k_ = k_.lower()    
@@ -82,6 +96,7 @@ def scanUserName(k_ , val_lis ):
     return hard_coded_unames
 
 def scanPasswords(k_ , val_lis ):
+    logObj.info('Scanning Passwords...')
     hard_coded_pwds = []
     if isinstance(k_, str):
         k_ = k_.lower()    
@@ -93,6 +108,7 @@ def scanPasswords(k_ , val_lis ):
 
 
 def checkIfValidKeyValue(single_config_val):
+    logObj.info('Validating Key Value...')
     flag2Ret = False 
     if ( isinstance( single_config_val, str ) ):
         if ( any(x_ in single_config_val for x_ in constants.VALID_KEY_STRING ) ):
@@ -100,6 +116,7 @@ def checkIfValidKeyValue(single_config_val):
     return flag2Ret
 
 def scanKeys(k_, val_lis):
+    logObj.info('Scanning Keys...')
     hard_coded_keys = []
     if isinstance(k_, str):
         k_ = k_.lower()    
@@ -111,6 +128,7 @@ def scanKeys(k_, val_lis):
 
 
 def scanForSecrets(yaml_d): 
+    logObj.info('Scanning Secrets...')
     key_lis, dic2ret_secret   = [], {} 
     parser.getKeyRecursively( yaml_d, key_lis )
     '''
@@ -133,6 +151,7 @@ def scanForSecrets(yaml_d):
 
 
 def scanForOverPrivileges(script_path):
+    logObj.info('Scaning for Over Privileges...')
     key_count , privi_dict_return = 0, {} 
     kind_values = [] 
     checkVal = parser.checkIfValidK8SYaml( script_path )
@@ -251,6 +270,7 @@ def scanSingleManifest( path_to_script ):
 
 
 def scanForHTTP( path2script ):
+    logObj.info('Scanning for HTTP...')
     sh_files_configmaps = {} 
     http_count = 0 
     if parser.checkIfValidK8SYaml( path2script ) or parser.checkIfValidHelm( path2script ):
@@ -302,6 +322,7 @@ def scanForHTTP( path2script ):
     return sh_files_configmaps 
 
 def scanForMissingSecurityContext(path_scrpt):
+    logObj.info('Scanning for Missing Security...')
     dic, lis   = {}, []
     if ( parser.checkIfValidK8SYaml( path_scrpt )  ): 
         cnt = 0 
@@ -413,6 +434,7 @@ def scanForResourceLimits(path_scrpt):
 
 
 def scanForRollingUpdates(path_script ):
+    logObj.info('Scanning for Updates...')
     dic, lis   = {}, []
     if ( parser.checkIfValidK8SYaml( path_script )  ): 
         cnt = 0 
@@ -439,6 +461,7 @@ def scanForRollingUpdates(path_script ):
 
 
 def scanForMissingNetworkPolicy(path_script ):
+    logObj.info('Scanning for Network Policy...')
     dic, lis   = {}, []
     if ( parser.checkIfValidK8SYaml( path_script )  ): 
         cnt = 0 
@@ -530,6 +553,7 @@ def scanDockerSock(path_script ):
     return dic  
 
 def runScanner(dir2scan):
+    logObj.info('Begin Scanner...')
     all_content   = [] 
     all_yml_files = getYAMLFiles(dir2scan)
     val_cnt       = 0 
@@ -579,7 +603,7 @@ def runScanner(dir2scan):
                 all_content.append( ( dir2scan, yml_, within_secret_, templ_secret_, valid_taint_secr, valid_taint_privi, http_dict, absentSecuContextDict, defaultNameSpaceDict, absentResourceDict, rollingUpdateDict, absentNetPolicyDic, pid_dic, ipc_dic, dockersock_dic, host_net_dic, cap_sys_dic, host_alias_dic, allow_privi_dic, unconfied_seccomp_dict, cap_module_dic, k8s_flag, helm_flag ) )
                 print(constants.SIMPLE_DASH_CHAR ) 
 
-
+    logObj.info('Scanner Completed')
     return all_content
 
 
